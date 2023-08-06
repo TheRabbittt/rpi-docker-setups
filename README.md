@@ -1,5 +1,5 @@
-# Rasperry Pi 4 Docker Setups
-This includes general configuration steps and includes docker-compose files if they were used
+# Docker Setups 
+This includes general configuration steps and includes docker-compose files, all of this was configured on a Raspberry Pi 4.
 
 ---
 
@@ -12,3 +12,7 @@ This includes general configuration steps and includes docker-compose files if t
   * [Nginx_Proxy_DB](https://github.com/NginxProxyManager/nginx-proxy-manager)
 * [Watchtower](https://github.com/containrrr/watchtower)
 
+---
+
+## Prerequisites
+An accessible Rasperry Pi with an installed and updated OS. I had [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (64-bit) installed which is based on Debian Linux although what you choose is up to you just make sure you know the commands for that particular distro or OS.
