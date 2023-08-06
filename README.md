@@ -19,6 +19,7 @@ Enough storage for your particular needs, I used a 128GB micro SD-card and for a
 
 ## Getting Started
 Installing ```Docker``` & ```Docker-Compose```.
+
 NOTE: This varies depending on OS or Distro, if you are not using a debian based distro read on how to do it on your OS/Distro on [Dockers official site](https://docs.docker.com/desktop/install/debian/)
 
 
