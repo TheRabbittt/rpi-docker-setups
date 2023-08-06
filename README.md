@@ -22,7 +22,10 @@ Installing ```Docker``` & ```Docker-Compose```.
 
 NOTE: This varies depending on OS or Distro, if you are not using a debian based distro read on how to do it on your OS/Distro on [Dockers official site](https://docs.docker.com/desktop/install/debian/)
 
-
+## Installing Docker
+``` bash
+curl -sSL https://get.docker.com | sh
+```
 
 
 
