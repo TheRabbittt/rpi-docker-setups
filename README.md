@@ -1,4 +1,4 @@
-# Docker Setups 
+# Self-Hosted Docker Services Setup
 This includes general configuration steps and includes docker-compose files, all of this was configured on a Raspberry Pi 4.
 
 ---
@@ -15,4 +15,7 @@ This includes general configuration steps and includes docker-compose files, all
 ---
 
 ## Prerequisites
-An accessible Rasperry Pi with an installed and updated OS. I had [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (64-bit) installed which is based on Debian Linux although what you choose is up to you just make sure you know the commands for that particular distro or OS.
+Enough storage for your particular needs, I used a 128GB micro SD-card and for all the services above I have only claimed 8GB of space so far. You need an accessible Rasperry Pi with an installed and updated OS. I had [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) (64-bit) installed which is based on Debian Linux. Although what you choose is up to you, just make sure you know the commands for that particular distro or OS. 
+
+
+
