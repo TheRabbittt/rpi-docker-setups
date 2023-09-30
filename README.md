@@ -44,6 +44,22 @@ docker-compose version
 ```
 
 ## Installing Portainer
+I like to keep directories of each service that I am using and putting the correspondent docker-compose.yml file in those directories. 
+##### Portainer Compose File
+``` bash
+version: "3"
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+      volumes:
+        - data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
+```
 
 
 
