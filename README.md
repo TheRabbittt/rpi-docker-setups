@@ -91,7 +91,6 @@ services:
       pihole:
         ipv4_address: 172.20.0.1
 
-
   cloudflared-cf:
     container_name: cloudflared-cf
     image: cloudflare/cloudflared:latest
