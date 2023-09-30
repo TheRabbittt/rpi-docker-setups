@@ -119,9 +119,9 @@ networks:
 ``` Bash
 version: '3'
 services:
-  app:
+  nginx_proxy_manager:
     image: 'jc21/nginx-proxy-manager:latest'
-    container_name: nginx_proxy_app
+    container_name: nginx_proxy_manager
     ports:
       - '80:80'
       - '81:81'
@@ -131,4 +131,13 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     restart: always
+    networks:
+      proxy:
+        ipv4_address: 172.19.0.10
+
+networks:
+  proxy:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
 ```
