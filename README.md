@@ -1,4 +1,4 @@
-# Self-Hosted Docker Services Setup
+# Self-Hosted Docker Services
 This Includes General Configuration Steps and Includes Docker-Compose Files, All of This Was Configured on a Raspberry Pi 4.
 
 ---
