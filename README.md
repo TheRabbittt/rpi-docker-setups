@@ -16,51 +16,51 @@ This Includes General Configuration Steps and Includes Docker-Compose Files, All
 ## Prerequisites
 * Enough Storage for Your Particular Needs, I Used a 128GB Micro Sd-Card and for All the Services Above I Have Only Claimed 8GB of Space So Far.
 * An Accessible Rasperry Pi With an Installed and Updated OS. I Had [Raspberry Pi OS](https://www.raspberrypi.com/Software/Operating-Systems/) (64-Bit) Installed Which Is Based on Debian Linux. Although What You Choose Is up to You, Just Make Sure You Know the Commands for That Particular Distro or OS.
-* Static Ip on the Raspberry Pi Is Highly Recommended.
+* Static IP on the Raspberry Pi Is Highly Recommended.
 
 ## Installing Docker
-To Get Started We Need to Install ```Docker``` & ```Docker-Compose```.
+To Get Started We Need to Install ```docker``` & ```docker-compose```.
 
 Note: Installation Varies Depending on OS or Distro, Read and Follow the Instructions on How to Do It on Your OS/Distro, [Dockers Official Site](https://docs.docker.com/Desktop/Install/Debian/)
 #### Docker on Debian 
 ``` Bash
-Curl -Ssl https://get.docker.com | SH
+curl -sSl https://get.docker.com | sh
 ```
 If You’re Smarter Than Me, Avoid Running Linux as Admin/Root. Add Your User to the Docker Group to Skip Typing Sudo for Docker. You Might Have to Log Out and Log Back in for This to Work.
 ``` Bash
-Sudo Usermod -Ag Docker ${User}
+sudo usermod -aG docker ${user}
 ```
 Verify That Docker Is Installed by Running Your Very First Container.
 ``` Bash
-Docker Run Hello-World
+docker run hello-world
 ```
 Install Docker Compose 
 ``` Bash
-Sudo Apt-Get Install Docker-Compose-Plugin
+sudo apt-get install docker-compose-plugin
 ```
 Verify That It Worked
 ``` Bash
-Docker-Compose Version
+docker-compose version
 ```
 
 ## Installing Portainer
 I Like to Keep Directories of Each Service That I Am Using and Putting the Correspondent docker-compose.yml File in Those Directories. 
 ##### Portainer Compose File
 ``` Bash
-Version: “3”
-Services:
-  Portainer:
-    Image: Portainer/Portainer-Ce:Latest
-    Ports:
+version: “3”
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
       - 9443:9443
-      Volumes:
-        - Data:/Data
-        - /Var/Run/docker.sock:/Var/Run/docker.sock
-    Restart: Unless-Stopped
-Volumes:
-  Data:
+      volumes:
+        - data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
 ```
 Run Portainer Using Compose File
 ``` Bash
-Docker Compose up -D
+docker compose up -d
 ```
