@@ -67,7 +67,6 @@ docker compose up -d
 It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
 
 ## Installing PiHole + Cloudflared
-Same Idea as before, create a directory and copy paste this into a docker-compose.yml file.
 ``` Bash
 version: "3.4"
 
@@ -140,4 +139,20 @@ networks:
     ipam:
       config:
         - subnet: 172.19.0.0/16
+```
+## Installing Bitwarden/Vaultwarden
+``` Bash
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      - WEBSOCKET_ENABLED=true               
+    volumes:
+      - ./data:/data
+    ports:
+      - 8080:80                                 
 ```
