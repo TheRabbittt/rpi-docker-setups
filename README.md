@@ -22,7 +22,7 @@ To get started we need to install ```Docker``` & ```Docker-Compose```.
 
 NOTE: Installation varies depending on OS or Distro, read and follow the instructions on how to do it on your OS/Distro, [Dockers official site](https://docs.docker.com/desktop/install/debian/)
 
-# Debian 
+### Debian 
 ``` bash
 curl -sSL https://get.docker.com | sh
 ```
