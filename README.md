@@ -64,5 +64,54 @@ Run Portainer Using Compose File
 ``` Bash
 docker compose up -d
 ```
-It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 in your browser. 
+It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
+
+## Installing PiHole + Cloudflared
+Same Idea as before, create a directory and copy paste this into a docker-compose.yml file.
+``` Bash
+version: "3.4"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8061:80/tcp"
+      - "4443:443/tcp"
+    environment:
+      TZ: 'Europe/Stockholm'
+      WEBPASSWORD: 'changeme'
+    volumes:
+       - './data/etc:/etc/pihole/'
+       - './data/dnsmasq.d/:/etc/dnsmasq.d/'
+    restart: unless-stopped
+    networks:
+      - pihole
+
+  cloudflared-cf:
+    container_name: cloudflared-cf
+    image: cloudflare/cloudflared:latest
+    command: proxy-dns --address 0.0.0.0 --port 5353 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query
+    restart: unless-stopped
+    networks:
+      pihole:
+        ipv4_address: 172.20.1.1
+
+  cloudflared-goog:
+    container_name: cloudflared-goog
+    image: cloudflare/cloudflared:latest
+    command: proxy-dns --address 0.0.0.0 --port 5353 --upstream https://8.8.8.8/dns-query --upstream https://8.8.4.4/dns-query
+    restart: unless-stopped
+    networks:
+      pihole:
+        ipv4_address: 172.20.8.8
+
+networks:
+  pihole:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+```
 
