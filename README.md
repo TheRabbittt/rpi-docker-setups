@@ -88,7 +88,9 @@ services:
        - './data/dnsmasq.d/:/etc/dnsmasq.d/'
     restart: unless-stopped
     networks:
-      - pihole
+      pihole:
+        ipv4_address: 172.20.0.1
+
 
   cloudflared-cf:
     container_name: cloudflared-cf
