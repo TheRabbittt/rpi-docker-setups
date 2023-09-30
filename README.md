@@ -115,4 +115,20 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 ```
-
+## Installing NGINX Proxy Manager
+``` Bash
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx_proxy_app
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./config.json:/app/config/production.json
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    restart: always
+```
