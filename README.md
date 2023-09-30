@@ -43,7 +43,7 @@ Verify That It Worked
 docker-compose version
 ```
 
-## Installing Portainer
+## Portainer
 I Like to Keep Directories of Each Service That I Am Using and Putting the Correspondent docker-compose.yml File in Those Directories. 
 ##### Portainer Compose File
 ``` Bash
@@ -66,7 +66,7 @@ docker compose up -d
 ```
 It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
 
-## Installing PiHole + Cloudflared
+## PiHole + Cloudflared
 ``` Bash
 version: "3.4"
 
@@ -114,7 +114,7 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 ```
-## Installing NGINX Proxy Manager
+## NGINX Proxy Manager
 ``` Bash
 version: '3'
 services:
@@ -140,7 +140,7 @@ networks:
       config:
         - subnet: 172.19.0.0/16
 ```
-## Installing Bitwarden/Vaultwarden
+## Bitwarden/Vaultwarden
 ``` Bash
 version: '3'
 
@@ -155,4 +155,51 @@ services:
       - ./data:/data
     ports:
       - 8080:80                                 
+```
+## Wireguard VPN
+``` Bash
+version: "2.1"
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago                                     # Change this
+      - SERVERURL=auto #optional                               # Set to automatically server's external IP   
+      - SERVERPORT=51820 #optional
+      - PEERS=1 #optional                                      # Change this to the number of clients needed
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+    volumes:
+      - /home/pi/wireguard/config:/config                      # Change this
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp                                        # Forward port 51820/udp on your router to the server IP
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    restart: unless-stopped
+```
+## Watchtower
+``` Bash
+version: '3.8'
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    environment:
+      TZ: Europe/Stockholm                                                                               
+      WATCHTOWER_ROLLING_RESTART: 'true'
+      #WATCHTOWER_MONITOR_ONLY: 'true'
+      WATCHTOWER_SCHEDULE: '0 0 0 * * 0' #Runs Once A Week (Cron Epression)
+      WATCHTOWER_CLEANUP: 'true'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
 ```
