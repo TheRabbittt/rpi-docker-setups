@@ -25,7 +25,11 @@ NOTE: Installation varies depending on OS or Distro, read and follow the instruc
 ``` bash
 curl -sSL https://get.docker.com | sh
 ```
-If you are smarter than me than you arent running linux in admin/root mode and should add your user to the docker group so you dont have to type in sudo each time you want to run docker. To do this do "sudo usermod -aG docker ${USER}", you might have to log out and log back in for this to work fully.
+If you're smarter than me, avoid running Linux as admin/root. Add your user to the docker group to skip typing sudo for docker.
+``` bash
+sudo usermod -aG docker ${USER}
+```
+You might have to log out and log back in for this to work.
 
 To test if docker is working you can run your very first container by typing in "docker run hello-world", it should pull the image ""hello-world" and run it. 
 
