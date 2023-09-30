@@ -31,12 +31,18 @@ sudo usermod -aG docker ${USER}
 ```
 You might have to log out and log back in for this to work.
 
-To test if docker is working you can run your very first container by typing in "docker run hello-world", it should pull the image ""hello-world" and run it. 
-
-To install docker compose you type in: 
+Verify that docker is installed by running your very first container.
+``` bash
+docker run hello-world
+```
+Install docker compose 
+``` bash
 sudo apt-get install docker-compose-plugin
-type in docker-compose version to verify that it is installed
-
+```
+Verify that it worked
+``` bash
+docker-compose version
+```
 
 
 
