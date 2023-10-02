@@ -40,7 +40,7 @@ sudo apt-get install docker-compose-plugin
 ```
 Verify That It Worked
 ``` Bash
-docker-compose version
+docker compose version
 ```
 
 ## Portainer
