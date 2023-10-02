@@ -32,7 +32,7 @@ sudo usermod -aG docker ${user}
 ```
 Verify That Docker Is Installed by Running Your Very First Container.
 ``` Bash
-docker run hello-world
+sudo docker run hello-world
 ```
 Install Docker Compose 
 ``` Bash
