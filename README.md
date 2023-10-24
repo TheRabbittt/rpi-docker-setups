@@ -9,6 +9,7 @@ This Includes General Configuration Steps and Includes Docker-Compose Files, All
 * [Pihole](https://github.com/Pi-Hole/Pi-Hole)
   * [Cloudflared](https://github.com/Cloudflare/Cloudflared)
 * [Nginx Proxy Manager](https://github.com/Nginxproxymanager/Nginx-Proxy-Manager)
+* [WireGuard](https://www.wireguard.com/)
 * [Watchtower](https://github.com/Containrrr/Watchtower)
 
 ---
