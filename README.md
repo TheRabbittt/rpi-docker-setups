@@ -48,15 +48,14 @@ docker compose version
 I Like to Keep Directories of Each Service That I Am Using and Putting the Correspondent docker-compose.yml File in Those Directories. 
 ##### Portainer Compose File
 ``` Bash
-version: “3”
 services:
   portainer:
     image: portainer/portainer-ce:latest
     ports:
       - 9443:9443
-      volumes:
-        - data:/data
-        - /var/run/docker.sock:/var/run/docker.sock
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 volumes:
   data:
@@ -69,8 +68,6 @@ It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 
 
 ## PiHole + Cloudflared
 ``` Bash
-version: "3.4"
-
 services:
   pihole:
     container_name: pihole
@@ -117,7 +114,6 @@ networks:
 ```
 ## NGINX Proxy Manager
 ``` Bash
-version: '3'
 services:
   nginx_proxy_manager:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -143,8 +139,6 @@ networks:
 ```
 ## Bitwarden/Vaultwarden
 ``` Bash
-version: '3'
-
 services:
   vaultwarden:
     image: vaultwarden/server:latest
@@ -159,7 +153,6 @@ services:
 ```
 ## Wireguard VPN
 ``` Bash
-version: "2.1"
 services:
   wireguard:
     image: linuxserver/wireguard
@@ -189,7 +182,6 @@ services:
 ```
 ## Watchtower
 ``` Bash
-version: '3.8'
 services:
   watchtower:
     image: containrrr/watchtower:latest
