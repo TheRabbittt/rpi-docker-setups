@@ -1,5 +1,5 @@
 # Self-Hosted Docker Services
-This Includes General Configuration Steps and Includes Docker-Compose Files, All of This Was Configured on a Raspberry Pi 4.
+This includes general configuration steps and docker-compose files, all of this was configured on a Raspberry Pi 4.
 
 ---
 
@@ -15,41 +15,42 @@ This Includes General Configuration Steps and Includes Docker-Compose Files, All
 ---
 
 ## Prerequisites
-* Enough Storage for Your Particular Needs, I Used a 128GB Micro Sd-Card and for All the Services Above I Have Only Claimed 8GB of Space So Far.
-* An Accessible Rasperry Pi With an Installed and Updated OS. I Had [Raspberry Pi OS](https://www.raspberrypi.com/Software/Operating-Systems/) (64-Bit) Installed Which Is Based on Debian Linux. Although What You Choose Is up to You, Just Make Sure You Know the Commands for That Particular Distro or OS.
-* Static IP on the Raspberry Pi Is Highly Recommended.
+* Enough storage for your particular needs, I used a 128GB Micro SD-card and for all of the services above I have only claimed 8GB of space so far.
+* An accessible Rasperry Pi with an installed and updated OS. I had [Raspberry Pi OS](https://www.raspberrypi.com/Software/Operating-Systems/) (64-Bit) installed which is based on debian. Although what you choose is up to you, just make sure you know the commands for that particular distro or OS.
+* Static IP on the Raspberry Pi is highly recommended.
 
 ## Installing Docker
-To Get Started We Need to Install ```docker``` & ```docker-compose```.
+To get started we need to install ```docker``` & ```docker-compose```.
 
-Note: Installation Varies Depending on OS or Distro, Read and Follow the Instructions on How to Do It on Your OS/Distro, [Dockers Official Site](https://docs.docker.com/Desktop/Install/Debian/)
+Note: Installation varies depending on OS or distro, read and follow the instructions on how to do it on your OS/Distro, [Dockers Official Site](https://docs.docker.com/Desktop/Install/Debian/)
 #### Docker on Debian 
 ``` Bash
 curl -sSl https://get.docker.com | sh
 ```
-If You’re Smarter Than Me, Avoid Running Linux as Admin/Root. Add Your User to the Docker Group to Skip Typing Sudo for Docker. You Might Have to Log Out and Log Back in for This to Work.
+If you’re smarter than me, avoid running Linux as admin/root. Add your user to the docker group to skip typing sudo for docker. You might have to log out and log back in for this to work.
 ``` Bash
 sudo usermod -aG docker ${whoami}
 ```
-Verify That Docker Is Installed by Running Your Very First Container.
+Verify that docker is installed by running your very first container.
 ``` Bash
 sudo docker run hello-world
 ```
-Install Docker Compose 
+Install docker compose 
 ``` Bash
 sudo apt-get install docker-compose-plugin
 ```
-Verify That It Worked
+Verify that it worked
 ``` Bash
 docker compose version
 ```
 
 ## Portainer
-I Like to Keep Directories of Each Service That I Am Using and Putting the Correspondent docker-compose.yml File in Those Directories. 
+I like to keep directories of each service/application that I am using and putting the correspondent docker-compose.yml file in those directories. 
 ##### Portainer Compose File
 ``` Bash
 services:
   portainer:
+    container_name: portainer
     image: portainer/portainer-ce:latest
     ports:
       - 9443:9443
@@ -60,11 +61,11 @@ services:
 volumes:
   data:
 ```
-Run Portainer Using Compose File
+Run portainer using compose file
 ``` Bash
 docker compose up -d
 ```
-It's That Simple, You Should Know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
+It's that simple, you should know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
 
 ## PiHole + Cloudflared
 ``` Bash
@@ -112,6 +113,18 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 ```
+After running the docker compose yml you should be able to reach pihole through http://RaspberryPiIP:8061/admin. Login password should be "changeme" although you should change the password which you can do by going into the docker container.
+
+``` Bash
+docker exec -it <container_id> bash
+pihole -a -p <password>
+```
+
+For the finale configuration, go into settings in pihole and change the upstream DNS to the docker container IP addresses of cloudflared. Now that should be it for the raspberry pi, change your DNS server (typically your router) to point to the raspberry pi and boom.... you are done.
+
+<img src="https://github.com/user-attachments/assets/1e0f4ca6-b5bc-40be-866e-20e109b26fc9" width="700" />
+
+
 ## NGINX Proxy Manager
 ``` Bash
 services:
