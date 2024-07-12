@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
     networks:
       pihole:
-        ipv4_address: 172.20.0.1
+        ipv4_address: 172.20.0.10 
 
   cloudflared-cf:
     container_name: cloudflared-cf
