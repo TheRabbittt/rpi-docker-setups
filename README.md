@@ -29,7 +29,7 @@ curl -sSl https://get.docker.com | sh
 ```
 If You’re Smarter Than Me, Avoid Running Linux as Admin/Root. Add Your User to the Docker Group to Skip Typing Sudo for Docker. You Might Have to Log Out and Log Back in for This to Work.
 ``` Bash
-sudo usermod -aG docker ${user}
+sudo usermod -aG docker ${whoami}
 ```
 Verify That Docker Is Installed by Running Your Very First Container.
 ``` Bash
