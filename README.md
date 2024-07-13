@@ -72,7 +72,7 @@ Run portainer using compose file
 ``` Bash
 docker compose up -d
 ```
-It's that simple, you should know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
+It's that simple, you should know be able to head to https://{raspberrypiIP}:9443 in your browser and reach portainer. 
 
 ## Pi-Hole + Cloudflared
 
@@ -153,9 +153,11 @@ services:
       - 8080:80                                 
 ```
 
+Once the container is up you should be able to reach bitwarden through http://{raspberrypiIP}:8080, although you won't be able to create an account or use it just yet. Bitwarden needs to go through HTTPS otherwise errors will occur. There are multiple ways of doing this, one way is through a reverse proxy which I found to be the easiest. 
+
 ## NGINX Proxy Manager
 
-[A proxy manager required (other options exist i found this easiest) for vaultwarden, also good to have to not have to remember ips of pihole and other options also get https.]
+This is a proxy manager which you use to manage your existing domains and to what application a domain should reach. With this you can have domain names for your applications, for example instead of typing in the Pi-Hole IP each time you want to reach the GUI you can create a domain such as this:pihole.website.io. Obviously this wouldn't be public and only devices that can reach the NGINX Proxy Manager will be able to take advantage of this. This is a video that shows how to do it although I used deSec which is free (https://www.youtube.com/watch?v=qlcVx-k-02E)
 
 ``` Bash
 services:
