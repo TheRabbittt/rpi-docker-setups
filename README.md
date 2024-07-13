@@ -22,6 +22,10 @@ This includes general configuration steps and docker-compose files, all of this 
 ## Installing Docker
 To get started we need to install ```docker``` & ```docker-compose```.
 
+Docker is a tool used to automate deployment of applications in lightweight containers. Containers are isolated from one another and can be connected through other ways. The benfit to containers compared to VMs is that they use fewer resources because the containers share the services of a single OS.
+
+Docker compose is a tool that makes it easier to deploy single and multiple docker containers. These is where the YAML files come in which is that we use to configure the containers. It is basically just a standard that defines how to configure and start a container.
+
 Note: Installation varies depending on OS or distro, read and follow the instructions on how to do it on your OS/Distro, [Dockers Official Site](https://docs.docker.com/Desktop/Install/Debian/)
 #### Docker on Debian 
 ``` Bash
@@ -45,7 +49,10 @@ docker compose version
 ```
 
 ## Portainer
-I like to keep directories of each service/application that I am using and putting the correspondent docker-compose.yml file in those directories. 
+Portainer is a platform that can be used to manage docker and docker containers. It gives you a pretty GUI to monitor and manage your containers.
+
+Let's begin, I like to keep directories of each service/application that I am using and putting the correspondent docker-compose.yml file in those directories. 
+
 ##### Portainer Compose File
 ``` Bash
 services:
@@ -67,7 +74,12 @@ docker compose up -d
 ```
 It's that simple, you should know be able to head to https://RaspberryPiIP:9443 in your browser and reach portainer. 
 
-## PiHole + Cloudflared
+## Pi-Hole + Cloudflared
+
+Pi-Hole is a DNS sinkhole that is most known for blocking ads when you visit various sites. In my experience it will block a lot of telemtry requests, popups and images on on the sidebars of random sites. Although it will not block youtube ads or twitch ads, this is due to how those ads are delivered. Youtube delivers ads through the youtube domain so for Pi-Hole to block the ads it would have to block the whole youtube domain, which wouldn't be good.
+
+Pi-Hole in combination with cloudflared allows you to enable DNS over HTTPS (DoH). This ensures that your DNS queries are encrypted, protecting them from being seen or manipulated.
+
 ``` Bash
 services:
   pihole:
@@ -113,7 +125,7 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 ```
-After running the docker compose yml you should be able to reach pihole through http://RaspberryPiIP:8061/admin. Login password should be "changeme" although you should change the password which you can do by going into the docker container.
+After running the docker compose yml you should be able to reach pihole through http://{raspberrypi_ip}:8061/admin. Login password should be "changeme" although you should change the password which you can do by going into the docker container.
 
 ``` Bash
 docker exec -it <container_id> bash
@@ -122,10 +134,29 @@ pihole -a -p <password>
 
 For the finale configuration, go into settings in pihole and change the upstream DNS to the docker container IP addresses of cloudflared. Now that should be it for the raspberry pi, change your DNS server (typically your router) to point to the raspberry pi and boom.... you are done.
 
-<img src="https://github.com/user-attachments/assets/1e0f4ca6-b5bc-40be-866e-20e109b26fc9" width="700" />
+<img src="https://github.com/user-attachments/assets/ec1399ff-109d-4830-ad8d-698d63ad988f" width="700" />
 
+## Bitwarden/Vaultwarden
+Bitwarden is a password manager and vaultwarden is a more lightweight option that you can host yourself. This works with the bitwarden app and extension. 
+
+``` Bash
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      - WEBSOCKET_ENABLED=true               
+    volumes:
+      - ./data:/data
+    ports:
+      - 8080:80                                 
+```
 
 ## NGINX Proxy Manager
+
+[A proxy manager required (other options exist i found this easiest) for vaultwarden, also good to have to not have to remember ips of pihole and other options also get https.]
+
 ``` Bash
 services:
   nginx_proxy_manager:
@@ -150,21 +181,9 @@ networks:
       config:
         - subnet: 172.19.0.0/16
 ```
-## Bitwarden/Vaultwarden
-``` Bash
-services:
-  vaultwarden:
-    image: vaultwarden/server:latest
-    container_name: vaultwarden
-    restart: always
-    environment:
-      - WEBSOCKET_ENABLED=true               
-    volumes:
-      - ./data:/data
-    ports:
-      - 8080:80                                 
-```
+
 ## Wireguard VPN
+[VPN to reach local network and use pihole from outside of your home]
 ``` Bash
 services:
   wireguard:
@@ -194,6 +213,7 @@ services:
     restart: unless-stopped
 ```
 ## Watchtower
+[Constantly update your containers can be annoying why not automatically?]
 ``` Bash
 services:
   watchtower:
