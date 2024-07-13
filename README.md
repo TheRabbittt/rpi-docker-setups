@@ -215,7 +215,11 @@ services:
     restart: unless-stopped
 ```
 ## Watchtower
-[Constantly update your containers can be annoying why not automatically?]
+Watchtower kekeps containers up to date automatically, in the docker compose file you can see watchtower_schedule, this shows how often it will run. Change this to your liking. Once you run it, it's done.... if you want to configure it to ignore certain containers look up the documentation. It is pretty simple, in my case it is not needed. To check if it working you can type in
+``` Bash
+docker logs watchtower
+```
+
 ``` Bash
 services:
   watchtower:
