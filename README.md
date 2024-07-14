@@ -245,7 +245,7 @@ services:
 
 First create a new server in Discord where you will get your alerts. Find the webhook link for that server and keep the link somewhere for now.
 
-On the raspberry pi create file, you can call it anything, I named it cpu_temp.sh. Paste what's below into it:
+On the raspberry pi create file, you can call it anything, I named it cpu_temp.sh. Paste what's below into it and place the discord webhook link at the correct variable:
 
 ``` Bash
 #!/bin/bash
@@ -269,5 +269,33 @@ if [[ "$pi_temp" -ge 45 ]]; then
 fi
 ```
 
-To test it and make sure it is working change the 45 in the if statement to something lower like 20. Run the file ./cpu_temp.sh and you should get a notification in Discord. 
-To automate this ....
+To test it and make sure it is working change the 45 in the if statement to something lower like 20. Run the file ./cpu_temp.sh and you should get a notification in Discord. To automate this I used systemd timers and used this as a reference on what to do (https://www.howtogeek.com/replace-cron-jobs-with-systemd-timers/).
+
+Created a pialert.service and pialert.timer file at /etc/systemd/system
+
+pialert.service
+
+``` Bash
+Description="Runs pi alert script"
+Requires=cpu_temp.sh
+
+[Service]
+Type=simple
+ExecStart=/home/admin/pi-alert/cpu_temp.sh
+User=admin #change this to your user
+```
+
+pialert.timer
+
+``` Bash
+[Unit]
+Description="Timer for the pialert.service"
+
+[Timer]
+Unit=pialert.service
+OnBootSec=5min
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target
+```
