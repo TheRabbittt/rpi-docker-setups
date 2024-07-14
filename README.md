@@ -240,3 +240,34 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 ```
+
+## How to get Discord alert if Raspberry Pi is about to overheat
+
+First create a new server in Discord where you will get your alerts. Find the webhook link for that server and keep the link somewhere for now.
+
+On the raspberry pi create file, you can call it anything, I named it cpu_temp.sh. Paste what's below into it:
+
+``` Bash
+#!/bin/bash
+
+# get CPU temperature in Celsius
+pi_temp=$(vcgencmd measure_temp | awk -F "[=']" '{print($2)}')
+
+# for Fahrenheit temperatures, use this line instead
+# pi_temp=$(vcgencmd measure_temp | awk -F "[=']" '{print($2 * 1.8)+32}')
+
+# round down to an integer value
+pi_temp=$(echo $pi_temp | awk -F "[.]" '{print($1)}')
+
+# get the hostname, so we know which Pi is sending the alert
+this_pi=$(hostname)
+
+discord_pi_webhook="Discord Webhook Link"
+
+if [[ "$pi_temp" -ge 45 ]]; then
+  curl -H "Content-Type: application/json" -X POST -d '{"content":"'"ALERT! ${this_pi} CPU temp is: ${pi_temp}"'"}' $discord_pi_webhook
+fi
+```
+
+To test it and make sure it is working change the 45 in the if statement to something lower like 20. Run the file ./cpu_temp.sh and you should get a notification in Discord. 
+To automate this ....
