@@ -185,7 +185,7 @@ networks:
 ```
 
 ## Wireguard VPN
-[VPN to reach local network and use pihole from outside of your home]
+I also have a VPN on my Pi to be able to reach my applications on my LAN from outside. There are different options out there but I choose wireguard and found it simple to configure.
 ``` Bash
 services:
   wireguard:
@@ -214,8 +214,13 @@ services:
       - net.ipv4.ip_forward=1
     restart: unless-stopped
 ```
+The server side VPN is created, for the client side run the command below to get a QR code of the configuration for the client.
+``` Bash
+docker exec -it wireguard /app/show-peer {peer number or name}
+```
+To add more clients in the future edit the peers variable in the docker-compose file and recreate the container.
 ## Watchtower
-Watchtower kekeps containers up to date automatically, in the docker compose file you can see watchtower_schedule, this shows how often it will run. Change this to your liking. Once you run it, it's done.... if you want to configure it to ignore certain containers look up the documentation. It is pretty simple, in my case it is not needed. To check if it working you can type in
+Watchtower keeps containers up to date automatically, in the docker compose file you can see watchtower_schedule, this shows how often it will run. Change this to your liking. Once you run it, it's done.... if you want to configure it to ignore certain containers look up the documentation. It is pretty simple, in my case it is not needed. To check if it working you can type in
 ``` Bash
 docker logs watchtower
 ```
